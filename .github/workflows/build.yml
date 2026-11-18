@@ -1,0 +1,32 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ilammy/msvc-dev-cmd@v1
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build
+      - name: Regression test (must match upstream XEphem output)
+        shell: bash
+        run: |
+          ./build/astrotest.exe | tr -d '\r' > out.txt
+          tr -d '\r' < third_party/xephem/tests/output.expected | diff - out.txt
+      - name: Package
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory dist/NeoXEphemSky | Out-Null
+          Copy-Item build/NeoXEphemSky.exe, build/neox-sky.exe, LICENSE, README.md dist/NeoXEphemSky/
+          Copy-Item -Recurse build/data dist/NeoXEphemSky/data
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NeoXEphemSky-win64
+          path: dist/NeoXEphemSky

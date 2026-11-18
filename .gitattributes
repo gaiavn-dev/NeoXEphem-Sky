@@ -1,0 +1,6 @@
+* text=auto
+*.bat text eol=crlf
+third_party/** -text
+data/** -text
+*.png binary
+*.gif binary

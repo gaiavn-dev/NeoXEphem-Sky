@@ -1,0 +1,22 @@
+#include <winver.h>
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,0
+ PRODUCTVERSION 1,0,0,0
+ FILEOS VOS_NT_WINDOWS32
+ FILETYPE VFT_APP
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904b0"
+    BEGIN
+      VALUE "FileDescription", "NeoXEphem Sky - historical sky viewer"
+      VALUE "ProductName", "NeoXEphem for Windows (based on XEphem libastro, MIT)"
+      VALUE "FileVersion", "1.0.0"
+      VALUE "LegalCopyright", "XEphem (c) Elwood Downey, MIT License"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x409, 1200
+  END
+END
